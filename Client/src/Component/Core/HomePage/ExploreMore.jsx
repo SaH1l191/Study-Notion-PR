@@ -1,78 +1,73 @@
-import React, { useState } from "react";
-import { HomePageExplore } from "../../../Data/homepage-explore";
-import CourseCard from "./CourseCard";
-import HighlightText from "./HighlightText";
+import React, { useState } from 'react'
+import {HomePageExplore} from "../../../data/homepage-explore";
+import HighlightText from './HighlightText';
+import CourseCard from './CourseCard';
 
 const tabsName = [
   "Free",
   "New to coding",
   "Most popular",
   "Skills paths",
-  "Career paths",
+  "Career paths"
 ];
 
 const ExploreMore = () => {
-  const [currentTab, setCurrentTab] = useState(tabsName[0]);
-  const [courses, setCourses] = useState(HomePageExplore[0].courses);
-  const [currentCard, setCurrentCard] = useState(
-    HomePageExplore[0].courses[0].heading
-  );
 
-  const setMyCards = (value) => {
+  const [currentTab,setCurrentTab] = useState(tabsName[0]);
+  const [courses,setCourses] = useState(HomePageExplore[0].courses);
+  const [currentCard,setCurrentCard] = useState(HomePageExplore[0].courses[0].heading);
+
+  const setMyCards = (value)=>{
     setCurrentTab(value);
-    const result = HomePageExplore.filter((course) => course.tag === value);
+    const result = HomePageExplore.filter((course)=>course.tag === value);
     setCourses(result[0].courses);
     setCurrentCard(result[0].courses[0].heading);
-  };
+  }
+
+  // Find the max number of courses in any tab to reserve space
+  const maxCourses = Math.max(...HomePageExplore.map(tab => tab.courses.length));
 
   return (
-    <div>
-      {/* Explore more section */}
-      <div>
-        <div className="text-4xl font-semibold text-center my-10">
-          Unlock the
-          <HighlightText text={"Power of Code"} />
-          <p className="text-center text-richblack-300 text-lg font-semibold mt-1">
-            Learn to Build Anything You Can Imagine
-          </p>
-        </div>
+    <div className='relative w-full py-16 md:py-24'>
+      <div className='text-4xl font-semibold items-stretch md:text-center'>
+        Unlock the <HighlightText text={"Power of Code"}/>
       </div>
-
-      {/* Tabs Section */}
-      <div className="hidden lg:flex gap-5 -mt-5 mx-auto w-max bg-richblack-800 text-richblack-200 p-1 rounded-full font-medium drop-shadow-[0_1.5px_rgba(255,255,255,0.25)]">
-        {tabsName.map((ele, index) => {
-          return (
-            <div
-              className={` text-[16px] flex flex-row items-center gap-2 ${
-                currentTab === ele
-                  ? "bg-richblack-900 text-richblack-5 font-medium"
-                  : "text-richblack-200"
-              } px-7 py-[7px] rounded-full transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5`}
-              key={index}
-              onClick={() => setMyCards(ele)}
-            >
-              {ele}
+      <p className='text-lg items-stretch md:text-center mt-3 font-semibold text-richblack-300'>
+        Learn to Build Anything You Can Imagine
+      </p>
+      <div className='flex flex-col md:flex-row w-[50%] md:w-fit mx-auto items-center justify-center rounded-full bg-richblack-800 mt-5 mb-8 border-richblack-100 md:px-2 py-1'>
+        {
+          tabsName.map((element,index)=>(
+            <div className={`text-xs md:text-[16px] flex items-center justify-between md:gap-2 
+              ${currentTab === element ? "bg-richblack-900 text-richblack-5 font-medium" : "text-richblack-200"} rounded-full transition-all duration-200 cursor-pointer 
+              hover:bg-richblack-500 hover:text-richblack-5 px-1 md:px-7 py-2`} key={index}
+              onClick={()=>{setMyCards(element)}}>
+              {element}
             </div>
-          );
-        })}
+          ))
+        }
       </div>
-      <div className="hidden lg:block lg:h-[200px]"></div>
-
-      {/* Cards Group */}
-      <div className="lg:absolute gap-10 justify-center lg:gap-0 flex lg:justify-between flex-wrap w-full lg:bottom-[0] lg:left-[50%] lg:translate-x-[-50%] lg:translate-y-[50%] text-black lg:mb-0 mb-7 lg:px-0 px-3">
-        {courses.map((ele, index) => {
-          return (
-            <CourseCard
-              key={index}
-              cardData={ele}
-              currentCard={currentCard}
-              setCurrentCard={setCurrentCard}
-            />
-          );
-        })}
+      {/* Reserve space for cards */}
+      <div
+        className='flex flex-col md:flex-row items-center gap-3 md:gap-8 w-[90%] md:w-full mx-auto transition-all duration-300'
+        style={{
+          minHeight: `320px`, // Adjust based on your card height
+        }}
+      >
+        {
+          courses.map((element,index) => (
+            <CourseCard key={index} cardData={element} currentCard={currentCard} setCurrentCard={setCurrentCard} />
+          ))
+        }
+        {/* Render invisible placeholders to reserve space for max cards */}
+        {Array.from({length: maxCourses - courses.length}).map((_, idx) => (
+          <div key={idx} className="opacity-0 pointer-events-none">
+            <CourseCard cardData={{}} />
+          </div>
+        ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ExploreMore;
+export default ExploreMore
