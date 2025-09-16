@@ -159,7 +159,7 @@ const exportPerformanceData = () => {
         summary: getPerformanceSummary(),
         exportedAt: new Date().toISOString()
     };
-    
+    console.log("__dirname  ",__dirname)
     const filePath = path.join(__dirname, '../logs', `performance_${Date.now()}.json`);
     
     // Create logs directory if it doesn't exist

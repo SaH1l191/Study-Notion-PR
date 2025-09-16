@@ -61,8 +61,7 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
 	  console.log(`🚀 StudyNotion Server is running on port ${PORT}`);
   console.log(`📊 Analytics available at: http://localhost:${PORT}/api/v1/analytics`);
-  console.log(`💡 Performance metrics: http://localhost:${PORT}/api/v1/analytics/performance/summary`);
-  console.log(`📈 Resume metrics: http://localhost:${PORT}/api/v1/analytics/resume-metrics`);
+  console.log(`💡 Performance metrics: http://localhost:${PORT}/api/v1/analytics/performance/summary`); 
   console.log(`🏥 Health check: http://localhost:${PORT}/api/v1/analytics/health`);
 });
 
