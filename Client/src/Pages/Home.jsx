@@ -19,7 +19,7 @@ function Home() {
   return (
     <div>
       {/* Section 1 */}
-      <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
+      <div className="relative flex flex-col items-center justify-between w-11/12 gap-8 mx-auto text-white max-w-maxContent">
         {/* Become a Instructor Button */}
         <Link to={"/signup"}>
           <div className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-bold text-richblack-200 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-200 hover:scale-95 hover:drop-shadow-none">
@@ -31,7 +31,7 @@ function Home() {
         </Link>
 
         {/* Heading */}
-        <div className="text-center text-4xl font-semibold">
+        <div className="text-4xl font-semibold text-center">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
         </div>
@@ -45,7 +45,7 @@ function Home() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="mt-8 flex flex-row gap-7">
+        <div className="flex flex-row mt-8 gap-7">
           <CTAButton active={true} linkto={"/signup"}>
             Learn More
           </CTAButton>
@@ -55,12 +55,18 @@ function Home() {
         </div>
 
         {/* Video */}
-        <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+        <div
+          className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200"
+          style={{ width: 720, height: 405, maxWidth: "100%" }} // Reserve space
+        >
           <video
             className="shadow-[20px_20px_rgba(255,255,255)]"
             muted
             loop
             autoPlay
+            width={720}   // <-- Add width
+            height={405}  // <-- Add height (16:9 aspect ratio)
+            style={{ maxWidth: "100%", height: "auto", display: "block" }} // Responsive
           >
             <source src={Banner} type="video/mp4" />
           </video>
@@ -92,7 +98,7 @@ function Home() {
             }}
             codeColor={"text-yellow-25"}
             codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>This is myPage</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav> <a href="/one">One</a> <a href="/two">Two</a> <a href="/three">Three</a>\n</nav>\n</body>`}
-            backgroundGradient={<div className="codeblock1 absolute"></div>}
+            backgroundGradient={<div className="absolute codeblock1"></div>}
           />
         </div>
 
@@ -121,7 +127,7 @@ function Home() {
             }}
             codeColor={"text-white"}
             codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)\n}\nexport default Home;`}
-            backgroundGradient={<div className="codeblock2 absolute"></div>}
+            backgroundGradient={<div className="absolute codeblock2"></div>}
           />
         </div>
 
@@ -133,9 +139,9 @@ function Home() {
       <div className="bg-pure-greys-5 text-richblack-700">
         <div className="homepage_bg h-[320px]">
           {/* Explore Full Catagory Section */}
-          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+          <div className="flex flex-col items-center justify-between w-11/12 gap-8 mx-auto max-w-maxContent">
             <div className="lg:h-[150px]"></div>
-            <div className="flex flex-row gap-7 text-white lg:mt-8">
+            <div className="flex flex-row text-white gap-7 lg:mt-8">
               <CTAButton active={true} linkto={"/signup"}>
                 <div className="flex items-center gap-2">
                   Explore Full Catalog
@@ -149,7 +155,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
+        <div className="flex flex-col items-center justify-between w-11/12 gap-8 mx-auto max-w-maxContent ">
           {/* Job that is in Demand - Section 1 */}
           <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
             <div className="text-4xl font-semibold lg:w-[45%] ">
@@ -158,7 +164,9 @@ function Home() {
             </div>
             <div className="flex flex-col items-start gap-10 lg:w-[40%]">
               <div className="text-[16px]">
-                The modern educational landscape dictates its own terms. Today, being a competitive specialist requires more than just professional skills.
+                The modern StudyNotion is the dictates its own terms. Today, to
+                be a competitive specialist requires more than professional
+                skills.
               </div>
               <CTAButton active={true} linkto={"/signup"}>
                 <div className="">Learn More</div>
@@ -175,16 +183,22 @@ function Home() {
       </div>
 
       {/* Section 3 */}
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
-        {/* Become a instructor section */}
-        <InstructorSection />
+      <div className="relative flex flex-col items-center justify-between w-11/12 gap-8 mx-auto my-20 text-white max-w-maxContent bg-richblack-900">
+        {/* Become an instructor section */}
+        <div className="w-full min-h-[400px] md:min-h-[500px]">
+          <InstructorSection />
+        </div>
 
-        {/* Reviws from Other Learner */}
-        <h1 className="text-center text-4xl font-semibold mt-8">
-          Reviews From Other Learner
+        {/* Reviews from Other Learners */}
+        <h1 className="mt-8 text-4xl font-semibold text-center">
+          Reviews from other learners
         </h1>
-        <ReviewSlider />
+
+        <div className="w-full min-h-[300px] md:min-h-[400px]">
+          <ReviewSlider />
+        </div>
       </div>
+
 
       {/* Footer */}
       <Footer />
