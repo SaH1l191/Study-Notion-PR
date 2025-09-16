@@ -18,9 +18,9 @@ const {
 //                                      PERFORMANCE ROUTES
 // ********************************************************************************************************
 
-// Get detailed performance metrics
-router.get("/performance", auth, isAdmin, (req, res) => {
-    try {
+//   working
+router.get("/performance", (req, res) => {
+    try {  
         const metrics = getPerformanceMetrics();
         return res.status(200).json({
             success: true,
@@ -36,8 +36,8 @@ router.get("/performance", auth, isAdmin, (req, res) => {
     }
 });
 
-// Get performance summary
-router.get("/performance/summary", auth, isAdmin, (req, res) => {
+//   working
+router.get("/performance/summary",   (req, res) => {
     try {
         const summary = getPerformanceSummary();
         return res.status(200).json({
@@ -54,8 +54,8 @@ router.get("/performance/summary", auth, isAdmin, (req, res) => {
     }
 });
 
-// Export performance data
-router.post("/performance/export", auth, isAdmin, (req, res) => {
+// not working
+router.post("/performance/export",   (req, res) => {
     try {
         const filePath = exportPerformanceData();
         return res.status(200).json({
@@ -72,8 +72,8 @@ router.post("/performance/export", auth, isAdmin, (req, res) => {
     }
 });
 
-// Reset performance metrics (for testing)
-router.post("/performance/reset", auth, isAdmin, (req, res) => {
+// not working 
+router.post("/performance/reset",   (req, res) => {
     try {
         resetMetrics();
         return res.status(200).json({
@@ -93,8 +93,8 @@ router.post("/performance/reset", auth, isAdmin, (req, res) => {
 //                                      ANALYTICS ROUTES
 // ********************************************************************************************************
 
-// Get comprehensive analytics
-router.get("/analytics", auth, isAdmin, async (req, res) => {
+// working 
+router.get("/analytics",  async (req, res) => {
     try {
         const analytics = await getAnalytics();
         return res.status(200).json({
@@ -111,7 +111,7 @@ router.get("/analytics", auth, isAdmin, async (req, res) => {
     }
 });
 
-// Get analytics summary (public endpoint for demo purposes)
+// working 
 router.get("/analytics/summary", async (req, res) => {
     try {
         const summary = getAnalyticsSummary();
@@ -129,7 +129,7 @@ router.get("/analytics/summary", async (req, res) => {
     }
 });
 
-// Generate comprehensive analytics report
+// not woprking 
 router.get("/analytics/report", auth, isAdmin, async (req, res) => {
     try {
         const report = await generateAnalyticsReport();
@@ -147,7 +147,7 @@ router.get("/analytics/report", auth, isAdmin, async (req, res) => {
     }
 });
 
-// Track custom events
+// not working 
 router.post("/analytics/track", async (req, res) => {
     try {
         const { eventType, eventData } = req.body;
@@ -209,9 +209,10 @@ router.get("/health", (req, res) => {
     }
 });
 
-// Get system metrics for monitoring
-router.get("/metrics", auth, isAdmin, async (req, res) => {
+// working 
+router.get("/metrics" , async (req, res) => {
     try {
+
         const analytics = await getAnalytics();
         const performance = getPerformanceMetrics();
         
@@ -250,63 +251,6 @@ router.get("/metrics", auth, isAdmin, async (req, res) => {
             error: error.message
         });
     }
-});
-
-// Get resume-ready metrics summary
-router.get("/resume-metrics", async (req, res) => {
-    try {
-        const analytics = await getAnalytics();
-        const performance = getPerformanceSummary();
-        
-        const resumeMetrics = {
-            projectScale: {
-                // totalCodeFiles: "147+ JavaScript/JSX files",
-                // linesOfCode: "11,000+ lines of code",
-                // componentsBuilt: "80+ reusable React components",
-                apiEndpoints: `${performance.totalEndpoints} RESTful API endpoints`
-            },
-            performanceAchievements: {
-                responseTime: `${performance.averageResponseTime}ms average response time`,
-                errorRate: `${performance.errorRate}% error rate`,
-                uptime: `${performance.uptime} hours uptime`,
-                performanceScore: `${performance.performanceScore}% performance score`
-            },
-            // businessImpact: {
-            //     usersServed: `${analytics.summary.totalPlatformUsers} total users`,
-            //     coursesManaged: `${analytics.summary.totalCoursesCreated} courses created`,
-            //     enrollmentsHandled: `${analytics.summary.totalEnrollments} total enrollments`,
-            //     revenueProcessed: analytics.summary.revenueGenerated,
-            //     userSatisfaction: `${analytics.summary.averageRating}/5.0 average rating`
-            // },
-            // technicalFeatures: {
-            //     // authentication: "JWT-based multi-role authentication",
-            //     // paymentIntegration: "Razorpay payment gateway integration",
-            //     // fileManagement: "Cloudinary-based media storage",
-            //     emailSystem: `${analytics.summary.emailDeliveryRate} email delivery rate`,
-            //     // databaseOperations: "MongoDB with optimized queries"
-            // },
-            // scalabilityMetrics: {
-            //     // concurrentUsers: "500+ users supported",
-            //     // dataProcessing: "10GB+ content delivery",
-            //     systemReliability: `${analytics.summary.completionRate} course completion rate`,
-            //     userEngagement: analytics.summary.userEngagementRate,
-            //     conversionRate: analytics.summary.conversionRate
-            // }
-        };
-        
-        return res.status(200).json({
-            success: true,
-            message: "Resume-ready metrics retrieved successfully",
-            data: resumeMetrics,
-            generatedAt: new Date().toISOString()
-        });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Failed to retrieve resume metrics",
-            error: error.message
-        });
-    }
-});
+}); 
 
 module.exports = router;
